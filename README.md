@@ -58,16 +58,3 @@ This project is configured for **"Set and Forget"** operation.
 ---
 
 *Built to ensure the persistence of structural data nodes.*
-
-```
-
----
-
-### Why this README works:
-*   **Mermaid.js:** Provides an instant, professional visualization of your pipeline for anyone viewing the repo.
-*   **Project Documentation:** It clearly defines the "Sliding Matrix" and "Differential Sync" logic, which are the core selling points of your system.
-*   **Maintenance:** It identifies the security secrets clearly, so you never accidentally push your raw keys into the repository history.
-
-**Pro-Tip:** If your repository is public, GitHub will automatically render the Mermaid diagram as an interactive chart!
-
-```
