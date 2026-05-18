@@ -3,7 +3,7 @@ name: KOSA Archiver
 on:
   schedule:
     # 21:37 UTC maps directly to 03:07 AM IST. 
-    # An irregular, off-hour time window to avoid global GitHub server traffic.
+    # An irregular, off-hour time window to avoid global GitHub server traffic congestion.
     - cron: '37 21 * * *'
   workflow_dispatch: # Allows you to manually trigger it via the Actions UI anytime
 
@@ -21,7 +21,6 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-          cache: 'pip'
 
       - name: Install Architecture System Modules
         run: |
@@ -40,7 +39,7 @@ jobs:
           git config --global user.name "ravikiranoffl"
           git config --global user.email "171322216+ravikiranoffl@users.noreply.github.com"
           
-
+          # Generate the unique dynamic ID string for the commit message matching script
           RUN_ID=$(python -c "from datetime import datetime, timezone, timedelta; print(datetime.now(timezone(timedelta(hours=5, minutes=30))).strftime('%Y%m%dd%H%M%S'))")
           
           git add status.json
@@ -48,8 +47,8 @@ jobs:
           # Only commit changes if modifications exist in status.json
           if ! git diff --cached --quiet; then
             git commit -m "$RUN_ID"
-            git push origin main
-            print("[SYS] Status updates pushed successfully. Calendar contribution updated.")
+            git push "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" main
+            echo "[SYS] Status updates pushed successfully. Calendar contribution updated."
           else
             echo "[SYS] No data mutation found today. Registry matches server baseline."
           fi
